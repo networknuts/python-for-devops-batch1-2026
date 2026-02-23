@@ -1,0 +1,41 @@
+#!/usr/bin/python3.10
+
+import argparse
+import platform
+import time
+import psutil
+
+def basic_info():
+    hostname = platform.node()
+    system = platform.system()
+    kernel = platform.release()
+    boot_time = psutil.boot_time()
+    print(f"Hostname: {hostname}")
+    print(f"System Type: {system}")
+    print(f"Kernel: {kernel}")
+    print(f"Boot time: {time.ctime(boot_time)}")
+
+def cpu_info():
+    cpu_count = psutil.cpu_count()
+    cpu_usage_percentage = psutil.cpu_percent()
+    print(f"Total CPU: {cpu_count}")
+    print(f"CPU Usage: {cpu_usage_percentage}%")
+
+parser = argparse.ArgumentParser(
+    prog="SysInfo",
+    description="Provides all important system information from one CLI",
+    epilog="Written in Python"
+)
+
+parser.add_argument("--basic",help="Basic information regarding the system.",action='store_true')
+parser.add_argument("--cpu",help="CPU information regarding the system.",action='store_true')
+
+args = parser.parse_args()
+
+
+if args.cpu:
+    cpu_info()
+elif args.basic:
+    basic_info()
+else:
+    basic_info()
